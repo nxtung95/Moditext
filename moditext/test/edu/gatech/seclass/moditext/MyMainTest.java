@@ -191,8 +191,6 @@ public class MyMainTest {
         Main.main(args);
 
         String actualOutput = capture.stdout();
-        System.out.println("Captured stdout: '" + actualOutput + "'");
-        System.out.println("Captured stderr: '" + capture.stderr() + "'");
 
         Assertions.assertEquals("test" + System.lineSeparator() + "test" + System.lineSeparator(), actualOutput);
         Assertions.assertEquals("", capture.stderr());
@@ -327,10 +325,7 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("*********non-empty test" + System.lineSeparator());
-        for (int i = 0; i < 10; i++) {
-            expectedOutputBuilder.append("**********" + System.lineSeparator());
-        }
+        expectedOutputBuilder.append("non-empty test").append(System.lineSeparator());
 
         String expectedOutput = expectedOutputBuilder.toString();
 
@@ -345,7 +340,7 @@ public class MyMainTest {
         String[] args = {"-p", "*", "5", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "****test" + System.lineSeparator();
+        String expectedOutput = "*test" + System.lineSeparator();
         Assertions.assertEquals(expectedOutput, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
@@ -358,8 +353,8 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("****test" + System.lineSeparator());
-        for (int i = 0; i < 5; i++) {
+        expectedOutputBuilder.append("*test" + System.lineSeparator());
+        for (int i = 0; i < 4; i++) {
             expectedOutputBuilder.append("*****" + System.lineSeparator());
         }
 
@@ -376,8 +371,8 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("*********test" + System.lineSeparator());
-        for (int i = 0; i < 10; i++) {
+        expectedOutputBuilder.append("******test" + System.lineSeparator());
+        for (int i = 0; i < 9; i++) {
             expectedOutputBuilder.append("**********" + System.lineSeparator());
         }
 
@@ -395,10 +390,11 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        for (int i = 0; i < 10; i++) {
+        expectedOutputBuilder.append("******test" + System.lineSeparator());
+        for (int i = 0; i < 9; i++) {
             expectedOutputBuilder.append("**********" + System.lineSeparator());
         }
-        expectedOutputBuilder.append("**********test" + System.lineSeparator());
+        expectedOutputBuilder.append("******test" + System.lineSeparator());
 
         String expectedOutput = expectedOutputBuilder.toString();
         Assertions.assertEquals(expectedOutput, capture.stdout());
@@ -423,8 +419,7 @@ public class MyMainTest {
         String[] args = {"-t", "5", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "T5" + System.lineSeparator();
-        Assertions.assertEquals(expectedOutput, capture.stdout());
+        Assertions.assertEquals("", capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -435,7 +430,7 @@ public class MyMainTest {
         String[] args = {"-t", "1", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "testT1" + System.lineSeparator();
+        String expectedOutput = "t" + System.lineSeparator();
         Assertions.assertEquals(expectedOutput, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
@@ -448,7 +443,7 @@ public class MyMainTest {
         String[] args = {"-t", "1", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "testT1" + System.lineSeparator() + "contentT1" + System.lineSeparator();
+        String expectedOutput = "t" + System.lineSeparator() + "c" + System.lineSeparator();
         Assertions.assertEquals(expectedOutput, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
@@ -462,9 +457,9 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("testT1" + System.lineSeparator());
-        for (int i = 0; i < 10; i++) {
-            expectedOutputBuilder.append("T1" + System.lineSeparator());
+        expectedOutputBuilder.append("t" + System.lineSeparator());
+        for (int i = 0; i < 9; i++) {
+            expectedOutputBuilder.append(System.lineSeparator());
         }
 
         String expectedOutput = expectedOutputBuilder.toString();
@@ -479,7 +474,7 @@ public class MyMainTest {
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(20) + "test");
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("test content" + System.lineSeparator().repeat(20) + "test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("test conte" + System.lineSeparator().repeat(20) + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -490,15 +485,8 @@ public class MyMainTest {
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
 
-        String expectedStdout = "Expected standard output based on test input content";
-        Assertions.assertEquals(expectedStdout, capture.stdout().trim());
-
-        String expectedStderr = "";
-        Assertions.assertEquals(expectedStderr, capture.stderr().trim());
-
-        Assertions.assertTrue(Files.exists(inputFile), "Input file should exist");
-        Assertions.assertFalse(Files.size(inputFile) == 0, "Input file should not be empty");
-        Assertions.assertDoesNotThrow(() -> Main.main(args), "Main method should not throw an exception");
+        Assertions.assertEquals("test input" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
@@ -508,7 +496,7 @@ public class MyMainTest {
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
 
-        Assertions.assertEquals("test" + System.lineSeparator() + "test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("test test " + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -518,7 +506,7 @@ public class MyMainTest {
         Path inputFile = createFile("test");
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals(System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -528,7 +516,7 @@ public class MyMainTest {
         Path inputFile = createFile("non-empty test test");
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("test" + System.lineSeparator() + "test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("non-empty " + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -538,7 +526,7 @@ public class MyMainTest {
         Path inputFile = createFile("different test content" + System.lineSeparator().repeat(50));
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("different test content" + System.lineSeparator().repeat(50), capture.stdout());
+        Assertions.assertEquals("different " + System.lineSeparator().repeat(50), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -548,7 +536,7 @@ public class MyMainTest {
         Path inputFile = createFile("different test content" + System.lineSeparator().repeat(100) + "test");
         String[] args = {"-t", "10", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("different test content" + System.lineSeparator().repeat(100) + "test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("different " + System.lineSeparator().repeat(100)  + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -589,10 +577,11 @@ public class MyMainTest {
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        StringBuilder expectedOutputBuilder = new StringBuilder("test content");
-        for (int i = 0; i < 10; i++) {
+        StringBuilder expectedOutputBuilder = new StringBuilder();
+        for (int i = 0; i < 9; i++) {
             expectedOutputBuilder.append(System.lineSeparator());
         }
+        expectedOutputBuilder.append("test content" + System.lineSeparator());
 
         Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -605,10 +594,11 @@ public class MyMainTest {
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        StringBuilder expectedOutputBuilder = new StringBuilder("test content");
-        for (int i = 0; i < 1000; i++) {
+        StringBuilder expectedOutputBuilder = new StringBuilder();
+        for (int i = 1; i < 1000; i++) {
             expectedOutputBuilder.append(System.lineSeparator());
         }
+        expectedOutputBuilder.append("test content" + System.lineSeparator());
 
         Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -617,15 +607,15 @@ public class MyMainTest {
     @Test
     void moditextTest42() {
         // Frame #: 4.1.1.3.2
-        Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000) + "test");
+        Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000) + "test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        StringBuilder expectedOutputBuilder = new StringBuilder("test content");
-        for (int i = 0; i < 1000; i++) {
+        StringBuilder expectedOutputBuilder = new StringBuilder("test" + System.lineSeparator());
+        for (int i = 1; i < 1000; i++) {
             expectedOutputBuilder.append(System.lineSeparator());
         }
-        expectedOutputBuilder.append("test").append(System.lineSeparator());
+        expectedOutputBuilder.append("test content").append(System.lineSeparator());
 
         Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -634,43 +624,43 @@ public class MyMainTest {
     @Test
     void moditextTest43() {
         // Frame #: 4.2.1.1.1
-        Path inputFile = createFile("non-empty");
+        Path inputFile = createFile("non-empty" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals("non-empty" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
     void moditextTest44() {
         // Frame #: 4.2.1.1.2
-        Path inputFile = createFile("non-empty test");
+        Path inputFile = createFile("non-empty test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("non-empty test" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
     void moditextTest45() {
         // Frame #: 4.2.1.2.1
-        Path inputFile = createFile("test non-empty");
+        Path inputFile = createFile("test non-empty" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        Assertions.assertEquals("test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("test non-empty" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
     void moditextTest46() {
         // Frame #: 4.2.1.2.2
-        Path inputFile = createFile("non-empty test test");
+        Path inputFile = createFile("non-empty" + System.lineSeparator() + "test1" + System.lineSeparator() + "test2");
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test" + System.lineSeparator() + "test" + System.lineSeparator();
+        String expectedOutput = "test2" + System.lineSeparator() + "test1" + System.lineSeparator() + "non-empty" + System.lineSeparator();
 
         Assertions.assertEquals(expectedOutput, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -684,12 +674,10 @@ public class MyMainTest {
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
-        for (int i = 0; i < 500; i++) {
+        for (int i = 1; i < 500; i++) {
             expectedOutputBuilder.append(System.lineSeparator());
         }
         expectedOutputBuilder.append("different test content").append(System.lineSeparator());
-
-        String actualOutput = capture.stdout();
 
         Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -698,19 +686,17 @@ public class MyMainTest {
     @Test
     void moditextTest48() {
         // Frame #: 4.2.1.3.2
-        Path inputFile = createFile("different test content" + System.lineSeparator().repeat(500) + "test");
+        Path inputFile = createFile("different test content" + System.lineSeparator().repeat(500) + "test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
         StringBuilder expectedOutputBuilder = new StringBuilder();
         expectedOutputBuilder.append("test").append(System.lineSeparator());
-        for (int i = 0; i < 500; i++) {
+        for (int i = 1; i < 500; i++) {
             expectedOutputBuilder.append(System.lineSeparator());
         }
 
         expectedOutputBuilder.append("different test content").append(System.lineSeparator());
-
-        String actualOutput = capture.stdout();
 
         Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -792,11 +778,11 @@ public class MyMainTest {
 
     @Test
     void moditextTest55() {
-        Path inputFile = createFile("test content" + System.lineSeparator() +"other content");
+        Path inputFile = createFile("test content" + System.lineSeparator() +"other content" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test content" + System.lineSeparator() + "other content" + System.lineSeparator();
+        String expectedOutput = "other content" + System.lineSeparator() + "test content" + System.lineSeparator();
 
         Assertions.assertEquals(expectedOutput, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
@@ -809,7 +795,7 @@ public class MyMainTest {
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test" + System.lineSeparator();
+        String expectedOutput = "test" + System.lineSeparator() + "other content" + System.lineSeparator() + "test content" + System.lineSeparator();
 
         String actualOutput = capture.stdout();
 
@@ -821,11 +807,11 @@ public class MyMainTest {
     @Test
     void moditextTest57() {
         // Frame #: 5.1.2.2.1
-        Path inputFile = createFile("multiple" + System.lineSeparator() + "lines" + System.lineSeparator() + "test" + System.lineSeparator() + "here");
+        Path inputFile = createFile("multiple" + System.lineSeparator() + "lines" + System.lineSeparator() + "test" + System.lineSeparator() + "here" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test" + System.lineSeparator();
+        String expectedOutput = "here" + System.lineSeparator() + "test" + System.lineSeparator() + "lines" + System.lineSeparator() + "multiple" + System.lineSeparator();
 
         String actualOutput = capture.stdout();
 
@@ -836,11 +822,11 @@ public class MyMainTest {
     @Test
     void moditextTest58() {
         // Frame #: 5.1.2.2.2
-        Path inputFile = createFile("another" + System.lineSeparator() + "test" + System.lineSeparator() + "content" + System.lineSeparator()+ "here" + System.lineSeparator()+ "again" + System.lineSeparator()+ "test");
+        Path inputFile = createFile("another" + System.lineSeparator() + "test" + System.lineSeparator() + "content" + System.lineSeparator()+ "here" + System.lineSeparator()+ "again" + System.lineSeparator()+ "test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test" + System.lineSeparator() + "test" + System.lineSeparator();
+        String expectedOutput = "test" + System.lineSeparator() + "again" + System.lineSeparator() + "here" + System.lineSeparator() + "content" + System.lineSeparator() + "test" + System.lineSeparator() + "another" + System.lineSeparator();
 
         String actualOutput = capture.stdout();
 
@@ -862,11 +848,19 @@ public class MyMainTest {
     @Test
     void moditextTest60() {
         // Frame #: 5.1.2.3.2
-        Path inputFile = createFile("mixed" + System.lineSeparator() + "content" + System.lineSeparator() + "test" + System.lineSeparator() + "lines" + System.lineSeparator() + "again" + System.lineSeparator() +"test" + System.lineSeparator() + "again");
+        Path inputFile = createFile("mixed" + System.lineSeparator()
+                + "content" + System.lineSeparator()
+                + "test" + System.lineSeparator()
+                + "lines" + System.lineSeparator()
+                + "again" + System.lineSeparator()
+                + "test" + System.lineSeparator()
+                + "again" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "test" + System.lineSeparator() + "test" + System.lineSeparator();
+        String expectedOutput = "again" + System.lineSeparator() + "test" + System.lineSeparator()
+                + "again" + System.lineSeparator() + "lines" + System.lineSeparator()
+                + "test" + System.lineSeparator() + "content" + System.lineSeparator() + "mixed" + System.lineSeparator();
 
         String actualOutput = capture.stdout();
 
@@ -881,24 +875,24 @@ public class MyMainTest {
         Path inputFile = createFile("test" + System.lineSeparator() + "example" + System.lineSeparator() + "testing" + System.lineSeparator() + "check");
         String[] args = {"-p", "#", "10", "-k", "test", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("#######test" + System.lineSeparator() + "######testing" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("######test" + System.lineSeparator() + "###testing" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
     void moditextTest62() {
         // Combine -t and -k
-        Path inputFile = createFile("test content" + System.lineSeparator() + "another test" + System.lineSeparator() + "random line" + System.lineSeparator() + "more tests");
+        Path inputFile = createFile("test content" + System.lineSeparator() + "another test" + System.lineSeparator() + "random line" + System.lineSeparator() + "more tests" + System.lineSeparator());
         String[] args = {"-t", "5", "-k", "test", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("test " + System.lineSeparator() + "anoth" + System.lineSeparator() + "more ", capture.stdout());
+        Assertions.assertEquals("test " + System.lineSeparator() + "anoth" + System.lineSeparator() + "more " + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
     void moditextTest63() {
         // Combine -r and -k
-        Path inputFile = createFile("line1" +System.lineSeparator() +"line2" + System.lineSeparator() + "test1" +System.lineSeparator() + " test2");
+        Path inputFile = createFile("line1" +System.lineSeparator() +"line2" + System.lineSeparator() + "test1" +System.lineSeparator() + "test2" +System.lineSeparator());
         String[] args = {"-r", "-k", "test", inputFile.toString()};
         Main.main(args);
         Assertions.assertEquals("test2" + System.lineSeparator() + "test1" + System.lineSeparator(), capture.stdout());
@@ -908,7 +902,7 @@ public class MyMainTest {
     @Test
     void moditextTest64() {
         // Combine -f with different styles and -k
-        Path inputFile = createFile("this is a test" + System.lineSeparator() + "nanother test line" + System.lineSeparator() + "simple line");
+        Path inputFile = createFile("this is a test" + System.lineSeparator() + "another test line" + System.lineSeparator() + "simple line");
         String[] args = {"-f", "bold", "test", "-k", "test", inputFile.toString()};
         Main.main(args);
         Assertions.assertEquals("this is a **test**" + System.lineSeparator() + "another **test** line" + System.lineSeparator(), capture.stdout());
@@ -918,10 +912,10 @@ public class MyMainTest {
     @Test
     void moditextTest65() {
         // Combine -g and -f
-        Path inputFile = createFile("int is an integer" + System.lineSeparator() + "int types are common" + System.lineSeparator() + "integer types are ints");
+        Path inputFile = createFile("int is an integer" + System.lineSeparator() + "int types are common" + System.lineSeparator() + "integer types are ints" + System.lineSeparator());
         String[] args = {"-g", "-f", "code", "int", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("`int` is an `int`eger" + System.lineSeparator() + "`int` types are common" + System.lineSeparator() + "`integer` types are `int`s", capture.stdout());
+        Assertions.assertEquals("`int` is an `int`eger" + System.lineSeparator() + "`int` types are common" + System.lineSeparator() + "`int`eger types are `int`s" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 }
