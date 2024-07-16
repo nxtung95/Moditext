@@ -1,0 +1,28 @@
+# Options Category
+option:
+    -k <string>.
+    -p <symbol> <maxPadding>.
+    -t <num>.
+    -r.
+    none.
+
+# From Input Category
+from:
+    Empty.
+    Non-empty.
+
+# File Presence Category
+filePresence:
+    Present.
+
+# File Size Category
+fileSize:
+    Empty.
+    Small.
+    Large.
+
+# Occurrences Category
+occurrences:
+    one.
+    Many.
+
