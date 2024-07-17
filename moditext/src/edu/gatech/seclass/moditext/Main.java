@@ -59,19 +59,33 @@ public class Main {
             return;
         }
 
+        String fileContent;
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
+            fileContent = Files.readString(filePath, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
+        if (lines.isEmpty()) {
+            return;
+        }
+        if (!fileContent.contains(System.lineSeparator())) {
+            usage();
+            return;
+        }
+
         String[] validOptions = new String[] {"-k", "-p", "-t", "-g", "-f", "-r"};
 
-        Map<String, String> optionMap = new HashMap<>();
+        String[] listArgs = new String[args.length - 1];
         for (int i = 0; i < args.length - 1; i++) {
-            String option = args[i];
+            listArgs[i] = args[i];
+        }
+        Map<String, OptionObject> optionMap = new HashMap<>();
+        for (int i = 0; i < listArgs.length; i++) {
+            String option = listArgs[i];
             if (!Arrays.asList(validOptions).contains(option)) {
                 usage();
                 return;
@@ -79,30 +93,51 @@ public class Main {
             String value1 = "";
             String value2 = "";
 
+            OptionObject optionObject = new OptionObject();
             if ("-g".equals(option) || "-r".equals(option)) {
-                optionMap.put(option, "");
+                try {
+                    value1 = listArgs[i + 1];
+                    if (!Arrays.asList(validOptions).contains(value1)) {
+                        usage();
+                        return;
+                    }
+                } catch (Exception e) {
+                }
+
+                optionObject.setValue1("");
+                optionMap.put(option, optionObject);
             } else if ("-p".equals(option) || "-f".equals(option)) {
                 try {
-                    value1 = args[i + 1];
+                    value1 = listArgs[i + 1];
                 } catch (Exception e) {
+                    usage();
                     return;
                 }
                 try {
-                    value2 = args[i + 2];
+                    value2 = listArgs[i + 2];
                 } catch (Exception e) {
+                    usage();
                     return;
                 }
-                optionMap.put(option, value1 + "&&@@!!" + value2);
+                optionObject.setValue1(value1);
+                optionObject.setValue2(value2);
+                optionMap.put(option, optionObject);
                 i = i + 2;
             } else {
                 try {
-                    value1 = args[i + 1];
+                    value1 = listArgs[i + 1];
                 } catch (Exception e) {
+                    usage();
                     return;
                 }
-                optionMap.put(option, value1);
+                optionObject.setValue1(value1);
+                optionMap.put(option, optionObject);
                 i = i + 1;
             }
+        }
+
+        if (optionMap.isEmpty()) {
+            return;
         }
 
         Set<String> keys = optionMap.keySet();
@@ -114,11 +149,7 @@ public class Main {
             return;
         }
 
-        if (lines.isEmpty()) {
-            return;
-        }
-
-        Map<String, String> sortMap = new LinkedHashMap<>();
+        Map<String, OptionObject> sortMap = new LinkedHashMap<>();
         if (keys.contains("-k")) {
             sortMap.put("-k", optionMap.get("-k"));
         }
@@ -143,18 +174,17 @@ public class Main {
 
         List<String> filteredLines = new ArrayList<>(lines);
         filteredLines = filteredLines.stream().map(f -> f + System.lineSeparator()).collect(Collectors.toList());
-        for (Map.Entry<String, String> entry : sortMap.entrySet()) {
+        for (Map.Entry<String, OptionObject> entry : sortMap.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue();
+            OptionObject optionObject = entry.getValue();
 
             if ("-k".equals(key)) {
-                filteredLines = getKeepLineContainValue(value, filteredLines);
+                filteredLines = getKeepLineContainValue(optionObject.getValue1(), filteredLines);
             }
 
             if ("-p".equals(key)) {
-                String[] padding = optionMap.get("-p").split("&&@@!!");
-                String cha = padding[0];
-                String num = padding[1];
+                String cha = optionObject.getValue1();
+                String num = optionObject.getValue2();
 
                 if (cha.length() != 1) {
                     usage();
@@ -176,7 +206,7 @@ public class Main {
 
                 filteredLines = getPaddingLines(filteredLines, cha, padNum);
             } else if ("-t".equals(key)) {
-                String num = optionMap.get("-t");
+                String num = optionObject.getValue1();
                 int trimNum;
                 try {
                     trimNum = Integer.parseInt(num);
@@ -192,9 +222,8 @@ public class Main {
             }
 
             if ("-f".equals(key)) {
-                String[] formatText = optionMap.get("-f").split("&&@@!!");
-                String style = formatText[0];
-                String substring = formatText[1];
+                String style = optionObject.getValue1();
+                String substring = optionObject.getValue2();
                 if (!Arrays.asList("bold", "italic", "code").contains(style)) {
                     usage();
                     return;
@@ -213,6 +242,27 @@ public class Main {
 
         for (String line : filteredLines) {
             System.out.print(line);
+        }
+    }
+
+    public static class OptionObject {
+        private String value1;
+        private String value2;
+
+        public void setValue1(String value1) {
+            this.value1 = value1;
+        }
+
+        public void setValue2(String value2) {
+            this.value2 = value2;
+        }
+
+        public String getValue1() {
+            return value1;
+        }
+
+        public String getValue2() {
+            return value2;
         }
     }
 

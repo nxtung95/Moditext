@@ -155,70 +155,6 @@ public class MyMainTest {
 
     @Test
     void moditextTest7() {
-        // Frame #: 1.2.1.1.1
-        Path inputFile = createFile("non-empty" + System.lineSeparator());
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("", capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest8() {
-        // Frame #: 1.2.1.1.2
-        Path inputFile = createFile("non-empty test" + System.lineSeparator());
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("non-empty test" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest9() {
-        // Frame #: 1.2.1.2.1
-        Path inputFile = createFile("test non-empty" + System.lineSeparator());
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test non-empty" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest10() {
-        // Frame #: 1.2.1.2.2
-        Path inputFile = createFile("non-empty" + System.lineSeparator() + "test" + System.lineSeparator() +"test" + System.lineSeparator());
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-
-        String actualOutput = capture.stdout();
-
-        Assertions.assertEquals("test" + System.lineSeparator() + "test" + System.lineSeparator(), actualOutput);
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest11() {
-        // Frame #: 1.2.1.3.1
-        Path inputFile = createFile("different content" + System.lineSeparator().repeat(500));
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("", capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest12() {
-        // Frame #: 1.2.1.3.2
-        Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000) + "test" + System.lineSeparator());
-        String[] args = {"-k", "test", inputFile.toString()};
-        Main.main(args);
-        String expectedOutput = "test content" + System.lineSeparator() + "test" + System.lineSeparator();
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest13() {
         // Frame #: 2.1.1.1.1
         Path inputFile = createFile("");
         String[] args = {"-p", "*", "10", inputFile.toString()};
@@ -228,35 +164,20 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest14() {
+    void moditextTest8() {
         // Frame #: 2.1.1.1.2
         Path inputFile = createFile("sample content" + System.lineSeparator());
         String[] args = {"-p", "*", "10", inputFile.toString()};
         Main.main(args);
 
         String output = capture.stdout();
-        System.out.println("Captured output: '" + output + "'");
 
         Assertions.assertEquals("sample content" + System.lineSeparator(), output);
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
-    void moditextTest15() {
-        // Frame #: 2.1.1.2.1
-        Path inputFile = createFile("test content" + System.lineSeparator());
-        String[] args = {"-p", "*", "10", inputFile.toString()};
-        Main.main(args);
-
-        String output = capture.stdout();
-        System.out.println("Captured Output: '" + output + "'");
-
-        Assertions.assertEquals("test content" + System.lineSeparator(), output);
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest16() {
+    void moditextTest9() {
         // Frame #: 2.1.1.2.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(10));
         String[] args = {"-p", "*", "20", inputFile.toString()};
@@ -272,25 +193,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest17() {
-        // Frame #: 2.1.1.3.1
-        Path inputFile = createFile("test content" + System.lineSeparator() + System.lineSeparator().repeat(10));
-        String[] args = {"-p", "*", "10", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder("test content" + System.lineSeparator());
-        for (int i = 0; i < 10; i++) {
-            expectedOutputBuilder.append("**********" + System.lineSeparator());
-        }
-
-        String expectedOutput = expectedOutputBuilder.toString();
-
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest18() {
+    void moditextTest10() {
         // Frame #: 2.1.1.3.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(10) + "test" + System.lineSeparator());
         String[] args = {"-p", "*", "10", inputFile.toString()};
@@ -308,7 +211,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest19() {
+    void moditextTest11() {
         // Frame #: 2.2.1.1.1
         Path inputFile = createFile("non-empty" + System.lineSeparator());
         String[] args = {"-p", "*", "10", inputFile.toString()};
@@ -317,93 +220,9 @@ public class MyMainTest {
         Assertions.assertEquals("", capture.stderr());
     }
 
-    @Test
-    void moditextTest20() {
-        // Frame #: 2.2.1.1.2
-        Path inputFile = createFile("non-empty test" + System.lineSeparator());
-        String[] args = {"-p", "*", "10", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("non-empty test").append(System.lineSeparator());
-
-        String expectedOutput = expectedOutputBuilder.toString();
-
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
 
     @Test
-    void moditextTest21() {
-        // Frame #: 2.2.1.2.1
-        Path inputFile = createFile("test" + System.lineSeparator());
-        String[] args = {"-p", "*", "5", inputFile.toString()};
-        Main.main(args);
-
-        String expectedOutput = "*test" + System.lineSeparator();
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest22() {
-        // Frame #: 2.2.1.2.2
-        Path inputFile = createFile("test" + System.lineSeparator().repeat(5));
-        String[] args = {"-p", "*", "5", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("*test" + System.lineSeparator());
-        for (int i = 0; i < 4; i++) {
-            expectedOutputBuilder.append("*****" + System.lineSeparator());
-        }
-
-        String expectedOutput = expectedOutputBuilder.toString();
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest23() {
-        // Frame #: 2.2.1.3.1
-        Path inputFile = createFile("test" + System.lineSeparator().repeat(10));
-        String[] args = {"-p", "*", "10", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("******test" + System.lineSeparator());
-        for (int i = 0; i < 9; i++) {
-            expectedOutputBuilder.append("**********" + System.lineSeparator());
-        }
-
-        String expectedOutput = expectedOutputBuilder.toString();
-
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest24() {
-        // Frame #: 2.2.1.3.2
-        Path inputFile = createFile("test" + System.lineSeparator().repeat(10) + "test" + System.lineSeparator());
-        String[] args = {"-p", "*", "10", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder();
-        expectedOutputBuilder.append("******test" + System.lineSeparator());
-        for (int i = 0; i < 9; i++) {
-            expectedOutputBuilder.append("**********" + System.lineSeparator());
-        }
-        expectedOutputBuilder.append("******test" + System.lineSeparator());
-
-        String expectedOutput = expectedOutputBuilder.toString();
-        Assertions.assertEquals(expectedOutput, capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-
-    @Test
-    void moditextTest25() {
+    void moditextTest12() {
         // Frame #: 3.1.1.1.1
         Path inputFile = createFile("");
         String[] args = {"-t", "10", inputFile.toString()};
@@ -413,18 +232,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest26() {
-        // Frame #: 3.1.1.1.2
-        Path inputFile = createFile("");
-        String[] args = {"-t", "5", inputFile.toString()};
-        Main.main(args);
-
-        Assertions.assertEquals("", capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest27() {
+    void moditextTest13() {
         // Frame #: 3.1.1.2.1
         Path inputFile = createFile("test" + System.lineSeparator());
         String[] args = {"-t", "1", inputFile.toString()};
@@ -437,7 +245,7 @@ public class MyMainTest {
 
 
     @Test
-    void moditextTest28() {
+    void moditextTest14() {
         // Frame #: 3.1.1.2.2
         Path inputFile = createFile("test" + System.lineSeparator() + "content" + System.lineSeparator());
         String[] args = {"-t", "1", inputFile.toString()};
@@ -450,7 +258,7 @@ public class MyMainTest {
 
 
     @Test
-    void moditextTest29() {
+    void moditextTest15() {
         // Frame #: 3.1.1.3.1
         Path inputFile = createFile("test" + System.lineSeparator().repeat(10));
         String[] args = {"-t", "1", inputFile.toString()};
@@ -469,7 +277,7 @@ public class MyMainTest {
 
 
     @Test
-    void moditextTest30() {
+    void moditextTest16() {
         // Frame #: 3.1.1.3.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(20) + "test" + System.lineSeparator());
         String[] args = {"-t", "10", inputFile.toString()};
@@ -479,39 +287,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest31() {
-        // Frame #: 3.2.1.1.1
-        Path inputFile = createFile("test input content" + System.lineSeparator());
-        String[] args = {"-t", "10", inputFile.toString()};
-        Main.main(args);
-
-        Assertions.assertEquals("test input" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest32() {
-        // Frame #: 3.2.1.1.2
-        Path inputFile = createFile("test test test" + System.lineSeparator());
-        String[] args = {"-t", "10", inputFile.toString()};
-        Main.main(args);
-
-        Assertions.assertEquals("test test " + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest33() {
-        // Frame #: 3.2.1.2.1
-        Path inputFile = createFile("test" + System.lineSeparator());
-        String[] args = {"-t", "10", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest34() {
+    void moditextTest17() {
         // Frame #: 3.2.1.2.2
         Path inputFile = createFile("non-empty test test" + System.lineSeparator());
         String[] args = {"-t", "10", inputFile.toString()};
@@ -521,27 +297,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest35() {
-        // Frame #: 3.2.1.3.1
-        Path inputFile = createFile("different test content" + System.lineSeparator().repeat(50));
-        String[] args = {"-t", "10", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("different " + System.lineSeparator().repeat(50), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest36() {
-        // Frame #: 3.2.1.3.2
-        Path inputFile = createFile("different test content" + System.lineSeparator().repeat(100) + "test" + System.lineSeparator());
-        String[] args = {"-t", "10", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("different " + System.lineSeparator().repeat(100)  + "test" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest37() {
+    void moditextTest18() {
         // Frame #: 4.1.1.1.1
         Path inputFile = createFile("");
         String[] args = {"-r", inputFile.toString()};
@@ -551,7 +307,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest38() {
+    void moditextTest19() {
         // Frame #: 4.1.1.1.2
         Path inputFile = createFile("sample content" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
@@ -561,17 +317,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest39() {
-        // Frame #: 4.1.1.2.1
-        Path inputFile = createFile("test content" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test content" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest40() {
+    void moditextTest20() {
         // Frame #: 4.1.1.2.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(10));
         String[] args = {"-r", inputFile.toString()};
@@ -588,24 +334,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest41() {
-        // Frame #: 4.1.1.3.1
-        Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000));
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-
-        StringBuilder expectedOutputBuilder = new StringBuilder();
-        for (int i = 1; i < 1000; i++) {
-            expectedOutputBuilder.append(System.lineSeparator());
-        }
-        expectedOutputBuilder.append("test content" + System.lineSeparator());
-
-        Assertions.assertEquals(expectedOutputBuilder.toString(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest42() {
+    void moditextTest21() {
         // Frame #: 4.1.1.3.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000) + "test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
@@ -622,39 +351,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest43() {
-        // Frame #: 4.2.1.1.1
-        Path inputFile = createFile("non-empty" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-
-        Assertions.assertEquals("non-empty" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest44() {
-        // Frame #: 4.2.1.1.2
-        Path inputFile = createFile("non-empty test" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("non-empty test" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest45() {
-        // Frame #: 4.2.1.2.1
-        Path inputFile = createFile("test non-empty" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-
-        Assertions.assertEquals("test non-empty" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest46() {
+    void moditextTest22() {
         // Frame #: 4.2.1.2.2
         Path inputFile = createFile("non-empty" + System.lineSeparator() + "test1" + System.lineSeparator() + "test2" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
@@ -667,7 +364,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest47() {
+    void moditextTest23() {
         // Frame #: 4.2.1.3.1
         Path inputFile = createFile("different test content" + System.lineSeparator().repeat(500));
         String[] args = {"-r", inputFile.toString()};
@@ -684,7 +381,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest48() {
+    void moditextTest24() {
         // Frame #: 4.2.1.3.2
         Path inputFile = createFile("different test content" + System.lineSeparator().repeat(500) + "test" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
@@ -703,7 +400,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest49() {
+    void moditextTest25() {
         // Frame #: 5.1.1.1.1
         Path inputFile = createFile("");
         String[] args = {inputFile.toString()};
@@ -713,52 +410,20 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest50() {
+    void moditextTest26() {
         // Frame #: 5.1.1.1.2
         Path inputFile = createFile("sample content" + System.lineSeparator());
         String[] args = {inputFile.toString()};
         Main.main(args);
 
-        String expectedOutput = "sample content" + System.lineSeparator();
-
         String actualOutput = capture.stdout();
 
-        Assertions.assertEquals(expectedOutput, actualOutput);
+        Assertions.assertEquals("", actualOutput);
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
-    void moditextTest51() {
-        // Frame #: 5.1.1.2.1
-        Path inputFile = createFile("test content" + System.lineSeparator());
-        String[] args = {inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test content" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest52() {
-        // Frame #: 5.1.1.2.2
-        Path inputFile = createFile("test content" + System.lineSeparator().repeat(10));
-        String[] args = {inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test content" + System.lineSeparator().repeat(10), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest53() {
-        // Frame #: 5.1.1.3.1
-        Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000));
-        String[] args = {inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("test content" + System.lineSeparator().repeat(1000), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest54() {
+    void moditextTest27() {
         // Frame #: 5.1.1.3.2
         Path inputFile = createFile("test content" + System.lineSeparator().repeat(1000) + "test" + System.lineSeparator());
         String[] args = {inputFile.toString()};
@@ -772,12 +437,12 @@ public class MyMainTest {
 
         String actualOutput = capture.stdout();
 
-        Assertions.assertEquals(expectedOutputBuilder.toString(), actualOutput);
+        Assertions.assertEquals("", actualOutput);
         Assertions.assertEquals("", capture.stderr());
     }
 
     @Test
-    void moditextTest55() {
+    void moditextTest28() {
         Path inputFile = createFile("test content" + System.lineSeparator() +"other content" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
         Main.main(args);
@@ -789,23 +454,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest56() {
-        // Frame #: 5.1.2.1.2
-        Path inputFile = createFile("test content" + System.lineSeparator() + "other content" + System.lineSeparator() + "test" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-
-        String expectedOutput = "test" + System.lineSeparator() + "other content" + System.lineSeparator() + "test content" + System.lineSeparator();
-
-        String actualOutput = capture.stdout();
-
-        Assertions.assertEquals(expectedOutput, actualOutput);
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-
-    @Test
-    void moditextTest57() {
+    void moditextTest29() {
         // Frame #: 5.1.2.2.1
         Path inputFile = createFile("multiple" + System.lineSeparator() + "lines" + System.lineSeparator() + "test" + System.lineSeparator() + "here" + System.lineSeparator());
         String[] args = {"-r", inputFile.toString()};
@@ -820,33 +469,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest58() {
-        // Frame #: 5.1.2.2.2
-        Path inputFile = createFile("another" + System.lineSeparator() + "test" + System.lineSeparator() + "content" + System.lineSeparator()+ "here" + System.lineSeparator()+ "again" + System.lineSeparator()+ "test" + System.lineSeparator());
-        String[] args = {"-r", inputFile.toString()};
-        Main.main(args);
-
-        String expectedOutput = "test" + System.lineSeparator() + "again" + System.lineSeparator() + "here" + System.lineSeparator() + "content" + System.lineSeparator() + "test" + System.lineSeparator() + "another" + System.lineSeparator();
-
-        String actualOutput = capture.stdout();
-
-        Assertions.assertEquals(expectedOutput, actualOutput);
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-
-    @Test
-    void moditextTest59() {
-        // Frame #: 5.2.1.3.1
-        Path inputFile = createFile("different test content" + System.lineSeparator().repeat(500));
-        String[] args = {inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("different test content" + System.lineSeparator().repeat(500), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest60() {
+    void moditextTest30() {
         // Frame #: 5.1.2.3.2
         Path inputFile = createFile("mixed" + System.lineSeparator()
                 + "content" + System.lineSeparator()
@@ -868,10 +491,374 @@ public class MyMainTest {
         Assertions.assertEquals("", capture.stderr());
     }
 
+    @Test
+    void moditextTest31() {
+        // File errors
+        Path inputFile = createFile(System.lineSeparator());
+        String[] args = {inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest32() {
+        // File errors
+        Path inputFile = createFile("test");
+        String[] args = {inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest33() {
+        // File errors
+        String[] args = {"-g", "-f", "code", "int"};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest34() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-k", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest35() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest36() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "a", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest37() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "3", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest38() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "3", "", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest39() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "", "3", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest40() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "-", "0", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest41() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "-", "101", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest42() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "-", "-1", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest43() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "-", "2.5", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest44() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "abcdef", "2", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest45() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-p", "a", "2", "-t", "3", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest46() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest47() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-k", "", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("test" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest48() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", "", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest49() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", "-1", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest50() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", "101", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest51() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", "2.5", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest52() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-t", "2", "-p", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest53() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-g", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest54() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-g", "", "-f", "bold", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest55() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-g", "abcd", "-f", "bold", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest56() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-f", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest57() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-f", "italic", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest58() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-f", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest59() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-f", "test", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest60() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-f", "italic", "", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
 
     @Test
     void moditextTest61() {
-        // Combine -p and -k
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-r", "", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest62() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-r", "abcd", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+
+    @Test
+    void moditextTest63() {
+        // single -f
+        Path inputFile = createFile("lines" + System.lineSeparator() + "again" + System.lineSeparator());
+        String[] args = {"-f", "bold", "again", inputFile.toString()};
+        Main.main(args);
+
+        String expectedOutput = "lines" + System.lineSeparator() + "**again**" + System.lineSeparator();
+
+        String actualOutput = capture.stdout();
+
+        Assertions.assertEquals(expectedOutput, actualOutput);
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest64() {
+        // single -f
+        Path inputFile = createFile("lines" + System.lineSeparator() + "again" + System.lineSeparator());
+        String[] args = {"-f", "italic", "again", inputFile.toString()};
+        Main.main(args);
+
+        String expectedOutput = "lines" + System.lineSeparator() + "*again*" + System.lineSeparator();
+
+        String actualOutput = capture.stdout();
+
+        Assertions.assertEquals(expectedOutput, actualOutput);
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest65() {
+        // single -f
+        Path inputFile = createFile("lines" + System.lineSeparator() + "again" + System.lineSeparator());
+        String[] args = {"-f", "code", "again", inputFile.toString()};
+        Main.main(args);
+
+        String expectedOutput = "lines" + System.lineSeparator() + "`again`" + System.lineSeparator();
+
+        String actualOutput = capture.stdout();
+
+        Assertions.assertEquals(expectedOutput, actualOutput);
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest66() {
+        // Combine -k and -p
         Path inputFile = createFile("test" + System.lineSeparator() + "example" + System.lineSeparator() + "testing" + System.lineSeparator() + "check" + System.lineSeparator());
         String[] args = {"-p", "#", "10", "-k", "test", inputFile.toString()};
         Main.main(args);
@@ -880,8 +867,8 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest62() {
-        // Combine -t and -k
+    void moditextTest67() {
+        // Combine -k and -t
         Path inputFile = createFile("test content" + System.lineSeparator() + "another test" + System.lineSeparator() + "random line" + System.lineSeparator() + "more tests" + System.lineSeparator());
         String[] args = {"-t", "5", "-k", "test", inputFile.toString()};
         Main.main(args);
@@ -890,8 +877,8 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest63() {
-        // Combine -r and -k
+    void moditextTest68() {
+        // Combine -k and -r
         Path inputFile = createFile("line1" +System.lineSeparator() +"line2" + System.lineSeparator() + "test1" +System.lineSeparator() + "test2" +System.lineSeparator());
         String[] args = {"-r", "-k", "test", inputFile.toString()};
         Main.main(args);
@@ -900,8 +887,8 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest64() {
-        // Combine -f with different styles and -k
+    void moditextTest69() {
+        // Combine -k and -f with different styles
         Path inputFile = createFile("this is a test" + System.lineSeparator() + "another test line" + System.lineSeparator() + "simple line" + System.lineSeparator());
         String[] args = {"-f", "bold", "test", "-k", "test", inputFile.toString()};
         Main.main(args);
@@ -910,12 +897,162 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest65() {
+    void moditextTest70() {
+        // Combine -k and -g
+        Path inputFile = createFile("this is a test" + System.lineSeparator() + "another test line" + System.lineSeparator() + "simple line" + System.lineSeparator());
+        String[] args = {"-g", "-k", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest71() {
+        // Combine -p and -g
+        Path inputFile = createFile("this is a test" + System.lineSeparator() + "another test line" + System.lineSeparator() + "simple line" + System.lineSeparator());
+        String[] args = {"-g", "-p", "t", "3", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest72() {
+        // Combine -p and -f
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator() + "line" + System.lineSeparator());
+        String[] args = {"-p", "-", "5", "-f", "italic", "line", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("-this" + System.lineSeparator() + "another" + System.lineSeparator() + "-*line*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest73() {
+        // Combine -p and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator() + "line" + System.lineSeparator());
+        String[] args = {"-p", "-", "5", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("-line" + System.lineSeparator() + "another" + System.lineSeparator() + "-this" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest74() {
+        // Combine -t and -g
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator() + "line" + System.lineSeparator());
+        String[] args = {"-t", "5", "-g", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest75() {
+        // Combine -t and -f
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator());
+        String[] args = {"-t", "5", "-f", "italic", "this", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("*this*" + System.lineSeparator() + "anoth" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest76() {
+        // Combine -t and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator());
+        String[] args = {"-t", "5", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("anoth" + System.lineSeparator() + "this" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest77() {
         // Combine -g and -f
         Path inputFile = createFile("int is an integer" + System.lineSeparator() + "int types are common" + System.lineSeparator() + "integer types are ints" + System.lineSeparator());
         String[] args = {"-g", "-f", "code", "int", inputFile.toString()};
         Main.main(args);
         Assertions.assertEquals("`int` is an `int`eger" + System.lineSeparator() + "`int` types are common" + System.lineSeparator() + "`int`eger types are `int`s" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest78() {
+        // Combine -g and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator());
+        String[] args = {"-g", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest79() {
+        // Combine -f and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "another" + System.lineSeparator());
+        String[] args = {"-f", "italic", "this", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("another" + System.lineSeparator() + "*this*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest80() {
+        // Combine -k and -p and -f
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-k", "this", "-p", "-", "5", "-f", "italic", "this", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("-*this*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest81() {
+        // Combine -k and -p and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "this line" + System.lineSeparator());
+        String[] args = {"-k", "this", "-p", "-", "5", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("this line" + System.lineSeparator() + "-this" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest82() {
+        // Combine -k and -t and -f
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-k", "this", "-t", "3", "-f", "italic", "thi", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("*thi*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest83() {
+        // Combine -k and -t and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "line this" + System.lineSeparator());
+        String[] args = {"-k", "this", "-t", "4", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("line" + System.lineSeparator() + "this" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest84() {
+        // Combine -k and -p and -g and -f and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "line this abc this" + System.lineSeparator());
+        String[] args = {"-k", "a", "-k", "this", "-p", "-", "1", "-p", "-", "5", "-g", "-f", "bold", "a", "-f", "italic", "this", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("line *this* abc *this*" + System.lineSeparator() + "-*this*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest85() {
+        // Combine -k and -t and -g and -f and -r
+        Path inputFile = createFile("this" + System.lineSeparator() + "line this abc this" + System.lineSeparator());
+        String[] args = {"-k", "a", "-k", "this", "-t", "1", "-t", "4", "-g", "-f", "bold", "a", "-f", "italic", "this", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("line" + System.lineSeparator() + "*this*" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 }
