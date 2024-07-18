@@ -136,7 +136,7 @@ public class Main {
             }
         }
 
-        if (optionMap.isEmpty()) {
+        if (optionMap.isEmpty() && fileContent.isEmpty()) {
             return;
         }
 
