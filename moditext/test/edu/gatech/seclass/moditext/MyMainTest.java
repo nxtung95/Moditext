@@ -1357,7 +1357,8 @@ public class MyMainTest {
         Path inputFile = createFile("this" + System.lineSeparator());
         String[] args = {"-k","this","-p","-","5","-f","italic","this", inputFile.toString()};
         Main.main(args);
-        Assertions.assertEquals("-*this*" + System.lineSeparator(), capture.stdout());
+        String output = "-*this*" + System.lineSeparator();
+        Assertions.assertEquals(output, capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 
@@ -1409,6 +1410,90 @@ public class MyMainTest {
         String[] args = {"-k", "a", "-k", "this", "-t", "1", "-t", "4", "-g", "-f", "bold", "a", "-f", "italic", "this", "-r", inputFile.toString()};
         Main.main(args);
         Assertions.assertEquals("line" + System.lineSeparator() + "*this*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest116() {
+        // single -p
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-p", "-", "100", inputFile.toString()};
+        Main.main(args);
+        StringBuilder strOutput = new StringBuilder("this" + System.lineSeparator());
+        for (int i = 0; i < 96; i++) {
+            strOutput.insert(0, "-");
+        }
+        Assertions.assertEquals(strOutput.toString(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest117() {
+        // single -p
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-p", "-r", "100", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest118() {
+        // single -t
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-t", "0", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals(System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest119() {
+        // single -t
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-t", "100", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("this" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest120() {
+        // single -k
+        Path inputFile = createFile("this" + System.lineSeparator() + "-rabbit" + System.lineSeparator());
+        String[] args = {"-k", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("-rabbit" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest121() {
+        // single -k
+        Path inputFile = createFile("this" + System.lineSeparator() + "-rabbit" + System.lineSeparator());
+        String[] args = {"-k", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("-rabbit" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest122() {
+        // single -f
+        Path inputFile = createFile("this" + System.lineSeparator());
+        String[] args = {"-f", "ITALIC", "this", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest123() {
+        // single -f
+        Path inputFile = createFile("this" + System.lineSeparator() + "-rabbit" + System.lineSeparator());
+        String[] args = {"-f", "italic", "-r", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("this" + System.lineSeparator() + "*-r*abbit" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
 }

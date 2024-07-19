@@ -294,7 +294,7 @@ public class Main {
         List<String> result = new ArrayList<>();
         for (String line : filteredLines) {
             String formatLine = line.substring(0, line.length() - System.lineSeparator().length());
-            if (formatLine.length() > trimNum && trimNum != 0) {
+            if (formatLine.length() > trimNum) {
                 formatLine = formatLine.substring(0, trimNum);
             }
             result.add(formatLine + System.lineSeparator());
