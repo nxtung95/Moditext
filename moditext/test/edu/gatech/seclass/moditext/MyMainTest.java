@@ -1496,4 +1496,24 @@ public class MyMainTest {
         Assertions.assertEquals("this" + System.lineSeparator() + "*-r*abbit" + System.lineSeparator(), capture.stdout());
         Assertions.assertEquals("", capture.stderr());
     }
+
+    @Test
+    void moditextTest124() {
+        // single -f
+        Path inputFile = createFile("italic" + System.lineSeparator());
+        String[] args = {"-f", "italic", "italic", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("*italic*" + System.lineSeparator(), capture.stdout());
+        Assertions.assertEquals("", capture.stderr());
+    }
+
+    @Test
+    void moditextTest125() {
+        // File errors
+        Path inputFile = createFile("test" + System.lineSeparator() + "line");
+        String[] args = {inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
 }

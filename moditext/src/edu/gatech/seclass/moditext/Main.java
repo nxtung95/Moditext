@@ -77,6 +77,14 @@ public class Main {
             return;
         }
 
+        if ((System.lineSeparator().length() == 2 && !fileContent.substring(fileContent.length() - 2).equals(System.lineSeparator()))) {
+            usage();
+            return;
+        } else if ((System.lineSeparator().length() == 1 && !fileContent.substring(fileContent.length() - 1).equals(System.lineSeparator()))) {
+            usage();
+            return;
+        }
+
         String[] validOptions = new String[] {"-k", "-p", "-t", "-g", "-f", "-r"};
 
         String[] listArgs = new String[args.length - 1];
