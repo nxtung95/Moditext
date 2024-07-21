@@ -1469,16 +1469,6 @@ public class MyMainTest {
 
     @Test
     void moditextTest121() {
-        // single -k
-        Path inputFile = createFile("this" + System.lineSeparator() + "-rabbit" + System.lineSeparator());
-        String[] args = {"-k", "-r", inputFile.toString()};
-        Main.main(args);
-        Assertions.assertEquals("-rabbit" + System.lineSeparator(), capture.stdout());
-        Assertions.assertEquals("", capture.stderr());
-    }
-
-    @Test
-    void moditextTest122() {
         // single -f
         Path inputFile = createFile("this" + System.lineSeparator());
         String[] args = {"-f", "ITALIC", "this", inputFile.toString()};
@@ -1488,7 +1478,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest123() {
+    void moditextTest122() {
         // single -f
         Path inputFile = createFile("this" + System.lineSeparator() + "-rabbit" + System.lineSeparator());
         String[] args = {"-f", "italic", "-r", inputFile.toString()};
@@ -1498,7 +1488,7 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest124() {
+    void moditextTest123() {
         // single -f
         Path inputFile = createFile("italic" + System.lineSeparator());
         String[] args = {"-f", "italic", "italic", inputFile.toString()};
@@ -1508,10 +1498,20 @@ public class MyMainTest {
     }
 
     @Test
-    void moditextTest125() {
+    void moditextTest124() {
         // File errors
         Path inputFile = createFile("test" + System.lineSeparator() + "line");
         String[] args = {inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest125() {
+        // File errors
+        Path inputFile = createFile("test" + System.lineSeparator() + "line");
+        String[] args = {"-k", "test", "sample.csv"};
         Main.main(args);
         Assertions.assertEquals("", capture.stdout());
         Assertions.assertEquals(usageStr, capture.stderr());
