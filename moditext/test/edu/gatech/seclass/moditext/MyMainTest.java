@@ -1510,8 +1510,28 @@ public class MyMainTest {
     @Test
     void moditextTest125() {
         // File errors
-        Path inputFile = createFile("test" + System.lineSeparator() + "line");
-        String[] args = {"-k", "test", "sample.csv"};
+        Path inputFile = createFile("test" + System.lineSeparator() + "line", "sample.csv");
+        String[] args = {"-k", "test", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest126() {
+        // Option errors
+        Path inputFile = createFile("test" + System.lineSeparator());
+        String[] args = {"-k", "t", "-y", "2", inputFile.toString()};
+        Main.main(args);
+        Assertions.assertEquals("", capture.stdout());
+        Assertions.assertEquals(usageStr, capture.stderr());
+    }
+
+    @Test
+    void moditextTest127() {
+        // File errors
+        Path inputFile = createFile("test" + System.lineSeparator() + "line" + System.lineSeparator());
+        String[] args = {inputFile.toString(), "-k", "test"};
         Main.main(args);
         Assertions.assertEquals("", capture.stdout());
         Assertions.assertEquals(usageStr, capture.stderr());
