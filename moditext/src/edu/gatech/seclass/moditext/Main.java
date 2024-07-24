@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 //public class Main {
@@ -287,10 +288,11 @@ public class Main {
         for (String line : filteredLines) {
             String newLine = line;
             if (line.contains(substring)) {
+                String escapeString = Pattern.quote(substring);
                 if (isGlobal) {
-                    newLine = line.replaceAll(substring, special + substring + special);
+                    newLine = line.replaceAll(escapeString, special + substring + special);
                 } else {
-                    newLine = line.replaceFirst(substring, special + substring + special);
+                    newLine = line.replaceFirst(escapeString, special + substring + special);
                 }
             }
             result.add(newLine);
